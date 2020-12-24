@@ -1,4 +1,6 @@
+import { getQueryPredicate } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
+import { ActivationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-equipment',
@@ -27,5 +29,24 @@ export class EquipmentComponent implements OnInit {
    ngOnInit() { }
 
    // Code your addItem function here:
-   
+   addItem(item: object) : boolean {
+      this.cargoHold.push(item);
+      console.log(item)
+      this.cargoMass += item['mass'];
+      return this.cargoMass <= this.maximumAllowedMass-200
+   }
+
+   inactiveBtn(mass) {
+     return this.cargoHold.length === this.maxItems || this.cargoMass + mass > this.maximumAllowedMass
+   }
+
+   maxMass() {
+     return this.cargoMass >= this.maximumAllowedMass - 200 
+   }
+
+   emptyHold() {
+     this.cargoHold = [];
+     this.cargoMass = 0;
+     this.maximumAllowedMass = 2000;
+   }
 }
